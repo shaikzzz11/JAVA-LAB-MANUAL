@@ -1,0 +1,506 @@
+          
+
+
+            HOSPITAL MANAGEMENT SYSTEM 
+
+
+
+              DHAANISH CHENNAI COLLEGE OF ENGINEERING 
+
+
+
+A detailed project report on a browser-based Hospital Management System developed using  and Java.
+Technology Stack
+Java | Web Browserw
+Academic Mini Project Submission
+Page	Section
+1	Cover Page
+2	Table of Contents
+3-5	Chapter 1 – Introduction
+6-8	Chapter 2 - System Analysis
+9-14	Chapter 3 - System Design
+15-21	Chapter 4 - Implementation
+22-23	Chapter 5 - Testing and Results
+24	Chapter 6 - Conclusion and Future Scope
+25	References
+TABLE OF CONTENTS
+
+   List of Figures
+
+Figure	Description
+3.1	High-level architecture
+3.2	Use case diagram
+3.3	Entity relationship model
+4.1 - 4.6	Application screenshots
+ CHAPTER 1 - INTRODUCTION
+1.1 Overview
+Hospitals must manage patient details, doctor information, appointments and billing in a timely and accurate manner. When these activities are performed through paper registers or isolated files, staff spend more time searching, validating and calculating than serving patients. The Hospital Management System (HMS) is a browser-based application that centralizes these essential activities in one simple interface.
+1.2 Background
+The project recreates the functional flow of a desktop hospital application using standard web technologies. It intentionally uses a familiar Swing-inspired visual style: title bars, beveled buttons, table grids and confirmation dialogs. The result is a single HTML file that can be opened directly in a browser without installation, a build process or a server.
+1.3 Need for the System
+•	Fast access to patient and doctor information.
+•	Reduction of manual calculation and transcription errors.
+•	Consistent validation of age, phone number and charges.
+•	A compact demonstration system suitable for a mini project.
+CHAPTER 1 - INTRODUCTION (CONTINUED)
+1.4 Problem Statement
+A small hospital or clinic requires a straightforward way to register patients, maintain doctor details, schedule appointments and calculate bills. In a manual process, records may be duplicated, appointment details may be missed, and charges may be added incorrectly. The challenge is to provide an easy-to-use system that brings these operations together while remaining simple to deploy and understand.
+1.5 Objectives
+•	Authenticate the user before application modules are shown.
+•	Register, select, update and delete patient records.
+•	Maintain doctor details with specialization, fee and contact information.
+•	Book and cancel appointments using valid patient and doctor records.
+•	Generate itemized bills and compute totals automatically.
+•	Give immediate confirmation and error messages for every important action.
+1.6 Project Goal
+The primary goal is to demonstrate complete front-end application development by combining user interface design, client-side validation, data handling and output presentation in one coherent healthcare workflow.
+CHAPTER 1 - INTRODUCTION (CONTINUED)
+1.7 Scope
+The application is intended for a single administrator in a small, demonstration-scale hospital environment. It covers the first level of hospital administration: patient registration, doctor maintenance, appointment scheduling and billing. Each module is accessible from the taskbar and dashboard after a successful login.
+1.8 Scope Boundaries
+Included	Not Included
+Administrator login	Multi-user / role-based accounts
+Patient, doctor, appointment and bill records	Persistent cloud or database storage
+Field validation and in-session updates	Clinical diagnosis or pharmacy inventory
+Formatted receipt output	Online payment gateway
+Browser-based standalone execution	Networked deployment and analytics
+1.9 Benefits
+The HMS improves record visibility, standardizes data entry, reduces arithmetic effort and makes the core hospital workflow easier to demonstrate. Since it runs locally in the browser, it is also highly portable and convenient for classroom evaluation.
+CHAPTER 2 - SYSTEM ANALYSIS
+2.1 Existing System
+Traditional hospital administration in small settings often depends on notebooks, paper forms and separate spreadsheets. Patient information must be located manually. The availability of doctors and appointments may not be immediately known. Billing requires staff to add several amounts by hand, which increases the chance of calculation errors.
+Issue	Effect on Operations
+Manual record search	Delays in patient service
+Repeated data entry	Duplicate or inconsistent records
+Paper appointment register	Difficult appointment tracking
+Manual arithmetic	Billing errors
+No immediate validation	Invalid phone and age entries
+These limitations indicate the need for a unified and interactive application. CHAPTER 2 - SYSTEM ANALYSIS (CONTINUED)
+2.2 Proposed System
+The proposed HMS provides a menu-driven browser interface. After login, the administrator moves between dashboard, patients, doctors, appointments and billing. JavaScript holds the current session data in arrays and refreshes the visible tables after every operation. Validation is performed before a record or bill is accepted.
+2.3 Feasibility Analysis
+Type	Assessment
+Technical	Feasible: uses only standard browser technologies.
+Economic	Feasible: no paid framework, server or database is required.
+Operational	Feasible: the desktop-like interface is clear for staff users.
+Schedule	Feasible: modules can be implemented and tested independently.
+2.4 Comparison
+Aspect	Manual Method	Proposed HMS
+Storage	Registers	In-memory structured records
+Search	Visual/manual	Doctor name search and tables
+Billing	Calculator/manual	Automatic total and receipt
+ CHAPTER 2 - SYSTEM ANALYSIS (CONTINUED)
+2.5 Functional Requirements
+•	Validate admin credentials and display the dashboard on success.
+•	Generate unique identifiers for patients, doctors, appointments and bills.
+•	Provide CRUD operations for patients and doctors.
+•	Populate appointment and billing selections from current patient records.
+•	Prevent invalid dates, empty fields, invalid phone numbers and negative charges.
+•	Show a confirmation before deleting records or exiting the system.
+2.6 Non-Functional Requirements
+•	Usability: readable labels, clear feedback and simple navigation.
+•	Performance: instant response for the small in-memory record set.
+•	Portability: works in Chrome, Edge and Firefox.
+•	Maintainability: modular JavaScript functions for validation and rendering.
+•	Reliability: validation stops incorrect records from entering the store.
+2.7 Hardware and Software Requirements
+Item	Requirement
+Computer	Desktop or laptop with 4 GB RAM
+Operating System	Windows, Linux or macOS
+Browser	Current Chrome, Edge or Firefox
+Development	Text editor / VS Code
+Runtime	HTML5, CSS3 and JavaScript
+CHAPTER 3 - SYSTEM DESIGN
+3.1 Architecture Design
+The HMS uses a client-side architecture. The presentation layer provides windows, forms, tables and dialogs. The logic layer validates values and processes CRUD, appointments and bills. The in-memory store maintains arrays of patient, doctor, appointment and bill objects for the active browser session.
+Figure 3.1: High-level architecture of the Hospital Management System
+This architecture keeps the solution simple and makes each responsibility easy to trace during testing.
+
+3.2 Use Case Design
+The administrator is the single actor for the present version. Authentication is completed before any business operation is available. Once logged in, the user can manage records, book or cancel appointments and generate bills.
+ 
+Figure 3.2: Use case diagram
+Use Case Summary
+Use Case	Outcome
+Log in	Opens the protected application workspace.
+Manage Patients / Doctors	Maintains the master data required by later modules.
+Book Appointment	Creates a scheduled visit with patient, doctor, date and time.
+Generate Bill	Produces an itemized receipt and calculated total.
+3.3 Entity Relationship Model
+Patient and doctor records provide the reference data for an appointment. A bill belongs to a patient and stores separate fee values before calculating the total. Identifiers ensure that records can be selected and updated consistently.
+Figure 3.3: Simplified entity relationship model
+Key Entities
+Entity	Important Fields
+Patient	id, name, age, gender, phone, address, disease
+Doctor	id, name, specialization, fee, phone
+Appointment	id, patient, doctor, date, time, status
+Bill	id, patient, doctor fee, medicine, room, lab, total
+3.4 Data Structure Design
+The data store is initialized by freshStore(). It contains four arrays and four counters. The counters are padded to create readable identifiers such as P001 and D003. The selected patient, doctor and appointment identifiers are retained separately so that the correct row can be highlighted and updated.
+Store Member	Purpose
+patients	Array of patient objects registered during the session
+doctors	Array of doctor objects; two sample doctors are loaded
+appointments	Array of booked or cancelled appointment objects
+bills	Array of generated bill objects
+pC, dC, aC, bC	Counters for unique identifier generation
+Data Integrity Rules
+•	Age must be from 1 to 130.
+•	Phone and contact values must contain exactly ten digits.
+•	Date must follow dd-mm-yyyy format.
+•	Amounts must be valid non-negative numbers. 3.5 User Interface Design
+The UI is designed to look like a familiar desktop application while running in a web browser. A blue taskbar identifies the active module. The window chrome, buttons and table headers use bevel-style CSS. Forms align labels and controls, while grid rows can be selected for update or deletion.
+UI Element	Design Purpose
+Login window	Restricts access and shows login hints/errors.
+Taskbar	Provides direct module navigation and exit action.
+Dashboard tiles	Offers an icon-based overview of main functions.
+Data grids	Shows rows and selection status for records.
+Modal dialogs	Provides success, warning and confirmation messages.
+Receipt panel	Uses monospaced text to present bill output.
+This consistent visual treatment improves learnability by making controls behave similarly across all modules. 3.6 Process Logic
+The application follows a simple control flow. Login validates the entered credentials. Screen switching hides non-selected modules. When a form is submitted, validation runs first; only valid data is saved. The related table or receipt is then rendered again. Confirmation dialogs prevent accidental destructive actions.
+Process	Main Steps
+Patient registration	Read fields - validate - assign ID - store - refresh table
+Doctor search	Read keyword - filter doctor names - render matching rows
+Appointment	Verify patient/doctor - validate date/time - store booking
+Billing	Validate charges - calculate total - create receipt
+Exit	Ask for confirmation - hide app - show restart screen
+3.7 Error Handling
+Errors are placed near the active form, making it clear which input must be corrected. Successful operations are communicated through a modal dialog, and delete or exit operations require an explicit Yes response.
+
+CHAPTER 4 - IMPLEMENTATION
+4.1 Development Environment
+Component	Implementation
+HTML5	Defines the login screen, application screens, forms, tables and dialogs.
+CSS3	Creates the desktop-inspired theme, layout, title bars, buttons and table style.
+JavaScript	Implements validation, navigation, data store, rendering and calculations.
+Browser	Executes the application directly from the hms.html file.
+4.2 Source Organization
+The project is deliberately self-contained. The style sheet and JavaScript are embedded in one HTML document. This makes distribution simple and allows the project to run immediately when the file is opened in a browser. Functions are grouped by responsibility: login, screen switching, patients, doctors, appointments, billing and exit. 4.3 Login and Dashboard Module
+The login module reads the username and password values. It rejects empty fields and accepts the configured administrator account. On success, it hides the login screen, shows the main application and renders the dashboard. The dashboard is a launch point for all functional modules.
+ 
+Figure 4.1: Login interface
+ 
+Figure 4.2: Dashboard navigation interface
+4.4 Patient Management Module
+The patient form collects name, age, gender, phone, address and disease. Validation prevents incomplete values, invalid age and incorrect phone length. Register creates a new patient object and refreshes the table. Clicking a row loads its data into the form, allowing update or delete actions.
+ 
+Figure 4.3: Patient registration and record-management screen
+4.5 Doctor Management Module
+The doctor screen maintains name, specialization, consultation fee and contact number. Two sample doctors are included when the application starts. The module also supports searching by doctor name, which filters the table without changing the underlying records.
+ 
+Figure 4.4: Doctor details and search screen
+4.6 Appointment Module
+The appointment form populates its patient and doctor lists from the available records. Booking checks that both references exist, validates the date and requires a time. Each successful booking receives an appointment ID and Booked status. A selected appointment can later be marked Cancelled.
+ 
+Figure 4.5: Appointment booking screen
+4.7 Billing Module
+Billing selects a registered patient and accepts four charge heads: doctor fee, medicine charge, room charge and laboratory charge. Each value is checked as a non-negative number. The total is calculated automatically and shown in a formatted receipt panel, together with a confirmation dialog.
+ 
+Figure 4.6: Bill generation and receipt screen
+4.8 Validation and User Feedback
+Validation functions are reused throughout the program. vNotEmpty verifies mandatory text, vPhone verifies ten digits, vAge checks the allowed age range, vDate checks the displayed date pattern and vNum verifies non-negative numerical values. This approach keeps the code consistent and avoids repeating validation logic.
+Validation	Example Message
+Empty patient name	Error: Name cannot be empty.
+Invalid age	Error: Age must be valid (1-130).
+Invalid phone	Error: Phone must be 10 digits.
+Invalid bill value	Error: Doctor Fee must be a valid number.
+No selected row	Error: Select a patient row first.
+Modal feedback also confirms successful registration, update, booking, cancellation and billing.
+This makes the system behaviour visible to the user at every important stage.
+
+CHAPTER 5 - TESTING AND RESULTS
+5.1 Testing Strategy
+The project was tested through functional test cases covering successful workflows, invalid inputs and state changes. Each test checks whether the visible result agrees with the expected system behaviour.
+ID	Test Case	Input / Action	Expected Result	Status
+T01	Blank login	No username/password	Inline error	Pass
+T02	Valid login	admin / admin123	Dashboard opens	Pass
+T03	Phone validation	Less than 10 digits	Validation error	Pass
+T04	Register patient	Valid form	New P001 row	Pass
+T05	Doctor search	Name keyword	Filtered rows	Pass
+T06	Book appointment	Valid
+patient/doctor/date/time	Booked row	Pass
+T07	Generate bill	500+250+1000+300	Rs. 2050.00	Pass
+ CHAPTER 5 - TESTING AND RESULTS (CONTINUED)
+5.2 Results
+All selected test cases passed. The system correctly blocks invalid input, retains valid records during the active session, updates the tables after user actions and calculates bill totals correctly.
+The test scenario below demonstrates the billing output.
+Charge Head	Amount (Rs.)
+Doctor Fee	500.00
+Medicine Charge	250.00
+Room Charge	1000.00
+Lab Charge	300.00
+TOTAL	2050.00
+5.3 Observations
+•	Patient and doctor tables respond immediately after registration, update or deletion.
+•	Appointment selections reflect currently available patient and doctor records.
+•	The receipt panel presents the complete billing breakdown in a clear monospaced format.
+•	The Exit module asks for confirmation and the Restart option resets the session store.
+The results show that the application meets the intended functional requirements for a browser-based mini project.
+CHAPTER 6 - CONCLUSION AND FUTURE SCOPE
+6.1 Conclusion
+The Hospital Management System successfully demonstrates a complete client-side workflow for essential hospital administration. It brings patient registration, doctor details, appointment scheduling and bill generation into a single browser-based application. The project is easy to run, visually consistent and supported by validation, table updates and confirmation dialogs. 6.2 Future Scope
+•	Use a persistent database so records are available after the browser closes.
+•	Add secure passwords, user roles and audit logs.
+•	Prevent time conflicts when booking appointments.
+•	Provide patient history, prescriptions and pharmacy inventory.
+•	Generate printable PDF invoices and management reports.
+•	Integrate online payment, email/SMS reminders and cloud backup. REFERENCES
+No.	Source
+1	MDN Web Docs. HTML: HyperText Markup Language. https://developer.mozilla.org/en-US/docs/Web/HTML
+2	MDN Web Docs. CSS: Cascading Style Sheets. https://developer.mozilla.org/en-US/docs/Web/CSS
+3	MDN Web Docs. JavaScript Guide. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide
+4	WHATWG. HTML Living Standard. https://html.spec.whatwg.org/
+5	W3C. Web Content Accessibility Guidelines (WCAG) 2.2. https://www.w3.org/TR/WCAG22/
+6	Pressman, R. S. and Maxim, B. R. Software Engineering: A Practitioner's Approach. McGraw-Hill.
+7	Sommerville, I. Software Engineering. Pearson.
+Project Artefact
+The source application is a self-contained Hospital Management System website implemented with HTML, CSS and JavaScript. All interface screenshots included in this report were captured from the working application.
+End of Report
+
+COMPLETE SOURCE CODE
+Java implementation of the Hospital Management System
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hospital Management System</title>
+<style>   * { box-sizing: border-box; }   html, body {     margin: 0; padding: 0; height: 100%;     background: #008080;     font-family: Tahoma, "Segoe UI", Verdana, sans-serif;     font-size: 12px;     color: #000;     overflow-x: hidden;   }   .window {     background: #ECE9D8;     border: 2px solid #0A246A;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.5);   }   .title-bar {     background: linear-gradient(to right, #0A246A 0%, #3A6EA5 55%, #A6CAF0 100%);     color: #fff;     font-weight: bold;     font-size: 13px;     padding: 4px 6px;     display: flex;     align-items: center;     justify-content: space-between;     letter-spacing: 0.3px;   }
+  .title-bar .capbtns { display: flex; gap: 3px; }   .title-bar .capbtns span {     display: inline-block; width: 16px; height: 14px;     background: #ECE9D8; border: 1px outset #ECE9D8;     text-align: center; line-height: 13px; font-size: 10px; color: #000; font-weight: bold;   }   .window-body { padding: 10px 14px; }   label { display:inline-block; min-width: 130px; font-weight: bold; color:#1a1a1a; }   input[type=text], input[type=password], input[type=number], select {     border: 2px inset #8a8a8a;     background: #fff;     padding: 3px 4px;
+    font-family: Tahoma, sans-serif;     font-size: 12px;     width: 230px;   }
+  input[readonly] { background:#e8e6df; color:#555; }   .row { margin-bottom: 7px; display:flex; align-items:center; gap:6px; }   .btn {
+    border: 2px outset #d4d0c8;
+    background: linear-gradient(to bottom, #ffffff 0%, #e6e4dc 45%, #d4d0c8 50%, #c3c0b6 100%);     padding: 5px 14px;     font-family: Tahoma, sans-serif;     font-size: 12px;     cursor: pointer;     margin-right: 6px;   }
+  .btn:active { border-style: inset; }
+  .btn:disabled { color: #999; cursor:default; }
+  .btn-primary { font-weight:bold; }
+  .btn-danger { color:#7a0000; font-weight:bold; }
+  .toolbar { margin: 8px 0 10px 0; padding-bottom:8px; border-bottom: 1px solid #a0a0a0; }   .jtable-wrap { border: 2px inset #8a8a8a; background:#fff; max-height: 230px; overflow:auto; }   table.jtable { border-collapse: collapse; width: 100%; font-family: "Courier New", monospace; fon     t-size: 12px; }   table.jtable th {     background: linear-gradient(to bottom, #f4f3ee, #d8d6cd);     border: 1px solid #9a9a9a;     padding: 4px 6px; text-align:left; position: sticky; top:0;   }   table.jtable td { border: 1px solid #d3d3d3; padding: 3px 6px; white-space:nowrap; }   table.jtable tr.datarow:hover { background:#eaf2ff; cursor:pointer; }   table.jtable tr.selected { background:#316AC5 !important; color:#fff; }   .empty-row td { text-align:center; color:#777; font-style:italic; font-family:Tahoma,sans-serif; 
+    }
+  #desktopArea { position:relative; min-height: 100vh; padding: 18px; }   .taskbar {     background: linear-gradient(to bottom, #245edb, #1941a5);     color:#fff; padding:6px 10px; display:flex; align-items:center; gap:8px;     box-shadow: 0 2px 6px rgba(0,0,0,.4);     position: sticky; top:0; z-index: 50;   }
+  .taskbar .logo { font-weight:bold; font-size:14px; margin-right:14px; }   .taskbar .tbtn {     background: rgba(255,255,255,0.12);     border: 1px solid rgba(255,255,255,0.35);     color:#fff; padding:6px 12px; cursor:pointer; font-size:12px; font-weight:bold; border-radius:2     px;   }
+  .taskbar .tbtn.active { background:#ECE9D8; color:#0A246A; }
+  .taskbar .tbtn:hover { background: rgba(255,255,255,0.25); }
+  .taskbar .spacer { flex:1; }
+  .taskbar .exitbtn { background:#a02020; border:1px solid #6e0f0f; }
+  .taskbar .exitbtn:hover { background:#c02a2a; }
+  .screen { max-width: 900px; margin: 20px auto 0 auto; }
+  .screen[hidden] { display:none !important; }
+  .hint { color:#444; font-style: italic; margin: 4px 0 10px 0; font-size:11px; }
+  .err { color:#7a0000; font-weight:bold; min-height:16px; font-size:12px; margin:4px 0; }
+  #loginScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+  #loginScreen .window { width: 360px; }
+  .dash-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:14px; padding: 6px 0; }   .dash-icon {     background: linear-gradient(to bottom, #ffffff, #dfe7f5);     border: 2px outset #b9c6e0; padding: 22px 10px; text-align:center; cursor:pointer; font-weight:
+    bold;   }
+  .dash-icon:hover { background: linear-gradient(to bottom,#eef3ff,#c9d8f2); }
+  .dash-icon .ic { font-size: 30px; display:block; margin-bottom:6px; }   .receipt {
+    background:#fff; border:2px inset #8a8a8a; font-family:"Courier New",monospace;     font-size:13px; white-space:pre; padding:10px 14px; margin-top:12px; line-height:1.4;   }   .modal-overlay {
+    position:fixed; inset:0; background:rgba(0,0,0,0.35);
+    display:flex; align-items:center; justify-content:center; z-index:200;   }
+  .modal { width: 330px; }
+  .modal .window-body { display:flex; gap:12px; align-items:flex-start; }
+  .modal .icon { font-size:26px; }
+  .modal .msg { flex:1; padding-top:2px; }
+  .modal .modal-buttons { text-align:right; padding: 0 14px 12px 14px; }
+  #closedScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+</style>
+</head>
+<body>
+<div id="loginScreen">
+  <div class="window">
+    <div class="title-bar">
+      <span>Hospital Management System - Login</span>
+      <span class="capbtns"><span>_</span><span>o</span><span>x</span></span>
+    </div>
+    <div class="window-body">
+      <div style="text-align:center; font-weight:bold; font-size:15px; margin-bottom:10px; color:#0
+    A246A;">
+        HOSPITAL MANAGEMENT SYSTEM
+      </div>
+      <div class="row"><label>Username</label><input id="loginUser" type="text" value=""></div>
+      <div class="row"><label>Password</label><input id="loginPass" type="password" value=""></div>
+      <div class="err" id="loginErr"></div>
+      <div class="toolbar" style="border:none; text-align:right;">
+        <button class="btn btn-primary" onclick="doLogin()">Login</button>
+      </div>
+      <div class="hint">Hint: admin / admin123</div>
+    </div>
+  </div>
+</div>
+<div id="mainApp" style="display:none;">
+  <div class="taskbar">
+    <span class="logo">HMS Dashboard</span>
+    <button class="tbtn" id="tab-dash" onclick="showScreen('dash')">Dashboard</button>
+    <button class="tbtn" id="tab-patient" onclick="showScreen('patient')">Patients</button>
+    <button class="tbtn" id="tab-doctor" onclick="showScreen('doctor')">Doctors</button>
+    <button class="tbtn" id="tab-appt" onclick="showScreen('appt')">Appointments</button>
+    <button class="tbtn" id="tab-bill" onclick="showScreen('bill')">Billing</button>
+    <span class="spacer"></span>
+    <button class="tbtn exitbtn" onclick="confirmExit()">Exit</button>
+  </div>
+  <div id="desktopArea">
+    <div class="screen" id="screen-dash">
+      <div class="window">         <div class="title-bar"><span>Dashboard</span><span class="capbtns"><span>_</span><span>o</s     pan><span>x</span></span></div>         <div class="window-body">           <div class="hint">Welcome, admin. Choose a module below.</div>
+          <div class="dash-grid">             <div class="dash-icon" onclick="showScreen('patient')"><span class="ic">P</span>Patient
+     Registration</div>             <div class="dash-icon" onclick="showScreen('doctor')"><span class="ic">D</span>Doctor D     etails</div>             <div class="dash-icon" onclick="showScreen('appt')"><span class="ic">A</span>Appointmen     t Booking</div>             <div class="dash-icon" onclick="showScreen('bill')"><span class="ic">B</span>Bill Gener     ation</div>           </div>
+        </div>
+      </div>
+    </div>
+    <div class="screen" id="screen-patient" hidden>
+      <div class="window">
+        <div class="title-bar"><span>Patient Registration</span><span class="capbtns"><span>_</span     ><span>o</span><span>x</span></span></div>
+        <div class="window-body">
+          <input type="hidden" id="pat_id">           <div class="row"><label>Patient ID</label><input id="pat_id_disp" type="text" readonly va     lue="(auto)"></div>           <div class="row"><label>Name</label><input id="pat_name" type="text"></div>
+          <div class="row"><label>Age</label><input id="pat_age" type="text"></div>
+          <div class="row"><label>Gender</label>             <select id="pat_gender"><option>Male</option><option>Female</option><option>Other</opti     on></select>           </div>
+          <div class="row"><label>Phone (10 digits)</label><input id="pat_phone" type="text"></div>
+          <div class="row"><label>Address</label><input id="pat_address" type="text"></div>
+          <div class="row"><label>Disease</label><input id="pat_disease" type="text"></div>
+          <div class="err" id="pat_err"></div>
+          <div class="toolbar">
+            <button class="btn btn-primary" onclick="registerPatient()">Register</button>
+            <button class="btn" onclick="updatePatient()">Update</button>
+            <button class="btn btn-danger" onclick="deletePatient()">Delete</button>
+            <button class="btn" onclick="clearPatientForm()">Clear</button>
+          </div>
+          <div class="jtable-wrap"><table class="jtable" id="patientTable"></table></div>
+        </div>
+      </div>
+    </div>
+    <div class="screen" id="screen-doctor" hidden>
+      <div class="window">
+        <div class="title-bar"><span>Doctor Details</span><span class="capbtns"><span>_</span><span
+    >o</span><span>x</span></span></div>
+        <div class="window-body">
+          <input type="hidden" id="doc_id">           <div class="row"><label>Doctor ID</label><input id="doc_id_disp" type="text" readonly val     ue="(auto)"></div>           <div class="row"><label>Name</label><input id="doc_name" type="text"></div>
+          <div class="row"><label>Specialization</label><input id="doc_spec" type="text"></div>
+          <div class="row"><label>Consultation Fee</label><input id="doc_fee" type="text"></div>           <div class="row"><label>Contact (10 digits)</label><input id="doc_phone" type="text"></di     v>           <div class="err" id="doc_err"></div>
+          <div class="toolbar">
+            <button class="btn btn-primary" onclick="addDoctor()">Add</button>
+            <button class="btn" onclick="updateDoctor()">Update</button>
+            <button class="btn btn-danger" onclick="deleteDoctor()">Delete</button>
+            <button class="btn" onclick="clearDoctorForm()">Clear</button>
+            <span style="margin-left:14px;">
+              <input id="doc_search" type="text" style="width:150px;" placeholder="search by name">
+              <button class="btn" onclick="searchDoctor()">Search</button>               <button class="btn" onclick="renderDoctors(DB.doctors)">Show All</button>
+            </span>
+          </div>
+          <div class="jtable-wrap"><table class="jtable" id="doctorTable"></table></div>
+        </div>
+      </div>
+  </div>     <div class="screen" id="screen-appt" hidden>
+      <div class="window">         <div class="title-bar"><span>Appointment Booking</span><span class="capbtns"><span>_</span>
+    <span>o</span><span>x</span></span></div>
+        <div class="window-body">           <div class="row"><label>Patient</label><select id="appt_patient" style="width:236px;"></s     elect></div>
+          <div class="row"><label>Doctor</label><select id="appt_doctor" style="width:236px;"></sel     ect></div>           <div class="row"><label>Date (dd-mm-yyyy)</label><input id="appt_date" type="text" placeh     older="28-07-2026"></div>           <div class="row"><label>Time</label><input id="appt_time" type="text" placeholder="10:30 
+    AM"></div>
+          <div class="err" id="appt_err"></div>
+          <div class="toolbar">
+            <button class="btn btn-primary" onclick="bookAppointment()">Book Appointment</button>             <button class="btn btn-danger" onclick="cancelAppointment()">Cancel Selected</button>
+          </div>
+          <div class="jtable-wrap"><table class="jtable" id="apptTable"></table></div>
+        </div>
+      </div>
+    </div>
+    <div class="screen" id="screen-bill" hidden>
+      <div class="window">         <div class="title-bar"><span>Bill Generation</span><span class="capbtns"><span>_</span><spa     n>o</span><span>x</span></span></div>         <div class="window-body">           <div class="row"><label>Patient</label><select id="bill_patient" style="width:236px;"></s     elect></div>           <div class="row"><label>Doctor Fee</label><input id="bill_doc" type="text" value="0"></di     v>           <div class="row"><label>Medicine Charge</label><input id="bill_med" type="text" value="0"
+    ></div>           <div class="row"><label>Room Charge</label><input id="bill_room" type="text" value="0"></     div>           <div class="row"><label>Lab Charge</label><input id="bill_lab" type="text" value="0"></di     v>           <div class="err" id="bill_err"></div>
+          <div class="toolbar">
+            <button class="btn btn-primary" onclick="generateBill()">Generate Bill</button>
+          </div>
+          <div class="receipt" id="billReceipt">(No bill generated yet.)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="closedScreen" style="display:none;">
+  <div class="window" style="width:340px;">     <div class="title-bar"><span>Hospital Management System</span><span class="capbtns"><span>x</sp     an></span></div>     <div class="window-body" style="text-align:center;">
+      <p style="font-size:14px;">Application closed. Goodbye!</p>       <button class="btn btn-primary" onclick="restartApp()">Restart</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modalOverlay" style="display:none;">
+  <div class="window modal">     <div class="title-bar"><span id="modalTitle">Message</span><span class="capbtns"><span>x</span>
+    </span></div>
+    <div class="window-body">
+      <span class="icon" id="modalIcon">i</span>       <span class="msg" id="modalMsg"></span>
+    </div>
+    <div class="modal-buttons" id="modalButtons"></div>
+  </div>
+</div>
+<script> function freshStore() {   return {     patients: [],     doctors: [       { id:"D001", name:"Dr. Anita Sharma", phone:"9876500001", spec:"Cardiology", fee:500.0 },       { id:"D002", name:"Dr. Vikram Rao",   phone:"9876500002", spec:"Orthopedics", fee:400.0 }     ],     appointments: [],     bills: [],     pC:1, dC:3, aC:1, bC:1   }; } let DB = freshStore(); const pad = (n) => String(n).padStart(3,"0"); const nextP = () => "P" + pad(DB.pC++); const nextD = () => "D" + pad(DB.dC++); const nextA = () => "A" + pad(DB.aC++); const nextB = () => "B" + pad(DB.bC++); const findP = (id) => DB.patients.find(p => p.id.toLowerCase() === (id||"").toLowerCase()); const findD = (id) => DB.doctors.find(d => d.id.toLowerCase() === (id||"").toLowerCase()); let selectedPatientId = null; let selectedDoctorId = null; let selectedApptId = null; function vNotEmpty(v){ return v && v.trim().length>0; } function vPhone(v){ return /^\d{10}$/.test(v||""); } function vDate(v){ return /^\d{2}-\d{2}-\d{4}$/.test(v||""); } function vAge(v){ const n = parseInt(v,10); return !isNaN(n) && n>0 && n<=130; } function vNum(v){ const n = parseFloat(v); return !isNaN(n) && n>=0; } function showDialog(title, msg, icon){   document.getElementById('modalTitle').textContent = title;   document.getElementById('modalMsg').textContent = msg;   document.getElementById('modalIcon').textContent = icon || 'i';   const btns = document.getElementById('modalButtons');   btns.innerHTML = '';   const ok = document.createElement('button');   ok.className = 'btn btn-primary';   ok.textContent = 'OK';   ok.onclick = () => document.getElementById('modalOverlay').style.display = 'none';   btns.appendChild(ok);   document.getElementById('modalOverlay').style.display = 'flex'; } function showConfirm(title, msg, onYes){
+  document.getElementById('modalTitle').textContent = title;   document.getElementById('modalMsg').textContent = msg;   document.getElementById('modalIcon').textContent = '?';   const btns = document.getElementById('modalButtons');   btns.innerHTML = '';
+  const yes = document.createElement('button');   yes.className = 'btn btn-primary'; yes.textContent = 'Yes';
+  yes.onclick = () => { document.getElementById('modalOverlay').style.display='none'; onYes(); };   const no = document.createElement('button');   no.className = 'btn'; no.textContent = 'No';
+  no.onclick = () => document.getElementById('modalOverlay').style.display='none';   btns.appendChild(yes); btns.appendChild(no);
+  document.getElementById('modalOverlay').style.display = 'flex'; } function doLogin(){   const u = document.getElementById('loginUser').value.trim();   const p = document.getElementById('loginPass').value.trim();   const err = document.getElementById('loginErr');
+  if(!u || !p){ err.textContent = ">> Cannot be empty."; return; }   if(u === "admin" && p === "admin123"){     err.textContent = "";     document.getElementById('loginScreen').style.display = 'none';     document.getElementById('mainApp').style.display = 'block';     showScreen('dash');     renderPatients(); renderDoctors(DB.doctors); renderAppointments();     populateApptCombos(); populateBillPatientCombo();     return;   }   err.textContent = ">> Invalid credentials. Try again."; } function showScreen(name){   ['dash','patient','doctor','appt','bill'].forEach(s => {     document.getElementById('screen-'+s).hidden = (s !== name);     const tab = document.getElementById('tab-'+s);     if(tab) tab.classList.toggle('active', s === name);   });
+  if(name === 'appt') populateApptCombos();   if(name === 'bill') populateBillPatientCombo(); } function renderPatients(){   const t = document.getElementById('patientTable');   let html = '<tr><th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Phone</th><th>Address</th>     <th>Disease</th></tr>';   if(DB.patients.length === 0){     html += '<tr class="empty-row"><td colspan="7">(No patients yet.)</td></tr>';   } else {     DB.patients.forEach(p => {
+      html += `<tr class="datarow ${p.id===selectedPatientId?'selected':''}" onclick="selectPatient     Row('${p.id}')">
+        <td>${p.id}</td><td>${p.name}</td><td>${p.age}</td><td>${p.gender}</td>         <td>${p.phone}</td><td>${p.address}</td><td>${p.disease}</td></tr>`;
+    });   }
+  t.innerHTML = html; } function selectPatientRow(id){   selectedPatientId = id;   const p = findP(id);   if(p){
+    document.getElementById('pat_id').value = p.id;     document.getElementById('pat_id_disp').value = p.id;     document.getElementById('pat_name').value = p.name;     document.getElementById('pat_age').value = p.age;     document.getElementById('pat_gender').value = p.gender;     document.getElementById('pat_phone').value = p.phone;     document.getElementById('pat_address').value = p.address;     document.getElementById('pat_disease').value = p.disease;   }
+  renderPatients(); }
+function clearPatientForm(){   selectedPatientId = null;   document.getElementById('pat_id').value = '';   document.getElementById('pat_id_disp').value = '(auto)';   ['pat_name','pat_age','pat_phone','pat_address','pat_disease'].forEach(id => document.getElementB     yId(id).value='');   document.getElementById('pat_gender').value = 'Male';   document.getElementById('pat_err').textContent = '';   renderPatients();
+} function registerPatient(){   const name = document.getElementById('pat_name').value.trim();   const age = document.getElementById('pat_age').value.trim();   const gender = document.getElementById('pat_gender').value;   const phone = document.getElementById('pat_phone').value.trim();   const address = document.getElementById('pat_address').value.trim();   const disease = document.getElementById('pat_disease').value.trim();   const err = document.getElementById('pat_err');   if(!vNotEmpty(name)) return err.textContent = 'Error: Name cannot be empty.';   if(!vAge(age)) return err.textContent = 'Error: Age must be valid (1-130).';   if(!vNotEmpty(gender)) return err.textContent = 'Error: Gender cannot be empty.';   if(!vPhone(phone)) return err.textContent = 'Error: Phone must be 10 digits.';   if(!vNotEmpty(address)) return err.textContent = 'Error: Address cannot be empty.';   if(!vNotEmpty(disease)) return err.textContent = 'Error: Disease cannot be empty.';   err.textContent = '';
+  const p = { id: nextP(), name, age: parseInt(age,10), gender, phone, address, disease };   DB.patients.push(p);   clearPatientForm();   showDialog('Success', 'Patient registered: ' + p.id + ' - ' + p.name, 'ok');   populateApptCombos(); populateBillPatientCombo(); } function updatePatient(){   const err = document.getElementById('pat_err');   if(!selectedPatientId) return err.textContent = 'Error: Select a patient row first.';   const p = findP(selectedPatientId);   const name = document.getElementById('pat_name').value.trim();   const age = document.getElementById('pat_age').value.trim();   const phone = document.getElementById('pat_phone').value.trim();   const disease = document.getElementById('pat_disease').value.trim();   if(!vNotEmpty(name)) return err.textContent = 'Error: Name cannot be empty.';   if(!vAge(age)) return err.textContent = 'Error: Age must be valid (1-130).';   if(!vPhone(phone)) return err.textContent = 'Error: Phone must be 10 digits.';   if(!vNotEmpty(disease)) return err.textContent = 'Error: Disease cannot be empty.';   err.textContent = '';
+  p.name = name; p.age = parseInt(age,10); p.phone = phone;
+  p.gender = document.getElementById('pat_gender').value;
+  p.address = document.getElementById('pat_address').value.trim();
+  p.disease = disease;   renderPatients();   showDialog('Updated', '>> Patient updated.', 'ok'); } function deletePatient(){
+  const err = document.getElementById('pat_err');   if(!selectedPatientId) return err.textContent = 'Error: Select a patient row first.';   const p = findP(selectedPatientId);
+  showConfirm('Confirm Delete', 'Delete ' + p.name + '?', () => {     DB.patients = DB.patients.filter(x => x.id !== p.id);     clearPatientForm();     populateApptCombos(); populateBillPatientCombo();   }); }
+function renderDoctors(list){
+  const t = document.getElementById('doctorTable');   let html = '<tr><th>ID</th><th>Name</th><th>Specialization</th><th>Fee</th><th>Contact</th></tr>'     ;
+  if(list.length === 0){     html += '<tr class="empty-row"><td colspan="5">(No doctors found.)</td></tr>';   } else {     list.forEach(d => {       html += `<tr class="datarow ${d.id===selectedDoctorId?'selected':''}" onclick="selectDoctorRo     w('${d.id}')">         <td>${d.id}</td><td>${d.name}</td><td>${d.spec}</td><td>${d.fee.toFixed(1)}</td><td>${d.pho     ne}</td></tr>`;     });   }
+  t.innerHTML = html; } function selectDoctorRow(id){   selectedDoctorId = id;   const d = findD(id);   if(d){     document.getElementById('doc_id').value = d.id;     document.getElementById('doc_id_disp').value = d.id;     document.getElementById('doc_name').value = d.name;     document.getElementById('doc_spec').value = d.spec; document.getElementById('doc_fee').value = d.fee;     document.getElementById('doc_phone').value = d.phone;   }
+  renderDoctors(DB.doctors); } function clearDoctorForm(){   selectedDoctorId = null;   document.getElementById('doc_id').value = '';   document.getElementById('doc_id_disp').value = '(auto)';   ['doc_name','doc_spec','doc_fee','doc_phone'].forEach(id => document.getElementById(id).value='')     ;   document.getElementById('doc_err').textContent = '';   renderDoctors(DB.doctors); } function addDoctor(){   const name = document.getElementById('doc_name').value.trim();   const spec = document.getElementById('doc_spec').value.trim();   const fee = document.getElementById('doc_fee').value.trim();   const phone = document.getElementById('doc_phone').value.trim();   const err = document.getElementById('doc_err');   if(!vNotEmpty(name)) return err.textContent = 'Error: Name cannot be empty.';   if(!vNotEmpty(spec)) return err.textContent = 'Error: Specialization cannot be empty.';   if(!vNum(fee)) return err.textContent = 'Error: Fee must be a valid non-negative number.';   if(!vPhone(phone)) return err.textContent = 'Error: Contact must be 10 digits.';   err.textContent = '';
+  const d = { id: nextD(), name, spec, fee: parseFloat(fee), phone };   DB.doctors.push(d);   clearDoctorForm();
+  showDialog('Success', 'Doctor added: ' + d.id + ' - ' + d.name, 'ok');   populateApptCombos(); }
+function updateDoctor(){
+  const err = document.getElementById('doc_err');
+  if(!selectedDoctorId) return err.textContent = 'Error: Select a doctor row first.';   const d = findD(selectedDoctorId);
+  const fee = document.getElementById('doc_fee').value.trim();   const phone = document.getElementById('doc_phone').value.trim();
+  if(!vNum(fee)) return err.textContent = 'Error: Fee must be a valid non-negative number.';   if(!vPhone(phone)) return err.textContent = 'Error: Contact must be 10 digits.';   err.textContent = '';
+  d.fee = parseFloat(fee); d.phone = phone;
+  d.name = document.getElementById('doc_name').value.trim();
+  d.spec = document.getElementById('doc_spec').value.trim();   renderDoctors(DB.doctors);   showDialog('Updated', '>> Doctor updated.', 'ok');
+}
+function deleteDoctor(){   const err = document.getElementById('doc_err');   if(!selectedDoctorId) return err.textContent = 'Error: Select a doctor row first.';   const d = findD(selectedDoctorId);
+  showConfirm('Confirm Delete', 'Delete ' + d.name + '?', () => {     DB.doctors = DB.doctors.filter(x => x.id !== d.id);     clearDoctorForm();     populateApptCombos();   }); } function searchDoctor(){   const kw = document.getElementById('doc_search').value.trim().toLowerCase();   renderDoctors(DB.doctors.filter(d => d.name.toLowerCase().includes(kw))); } function populateApptCombos(){   const ps = document.getElementById('appt_patient');   const ds = document.getElementById('appt_doctor');   ps.innerHTML = DB.patients.length     ? DB.patients.map(p => `<option value="${p.id}">${p.id} - ${p.name}</option>`).join('')     : '<option value="">(no patients)</option>';   ds.innerHTML = DB.doctors.length     ? DB.doctors.map(d => `<option value="${d.id}">${d.id} - ${d.name}</option>`).join('')
+    : '<option value="">(no doctors)</option>'; } function renderAppointments(){   const t = document.getElementById('apptTable');   let html = '<tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Time</th><th>Status</t     h></tr>';   if(DB.appointments.length === 0){     html += '<tr class="empty-row"><td colspan="6">(No appointments yet.)</td></tr>';   } else {     DB.appointments.forEach(a => {       html += `<tr class="datarow ${a.id===selectedApptId?'selected':''}" onclick="selectApptRow('$     {a.id}')">
+        <td>${a.id}</td><td>${a.patient.name}</td><td>${a.doctor.name}</td>         <td>${a.date}</td><td>${a.time}</td><td>${a.status}</td></tr>`;
+    });   }
+  t.innerHTML = html; } function selectApptRow(id){ selectedApptId = id; renderAppointments(); } function bookAppointment(){   const err = document.getElementById('appt_err');
+  if(DB.patients.length === 0) return err.textContent = 'Error: Register a patient first.';   if(DB.doctors.length === 0) return err.textContent = 'Error: No doctors available.';   const pid = document.getElementById('appt_patient').value;   const did = document.getElementById('appt_doctor').value;   const date = document.getElementById('appt_date').value.trim();   const time = document.getElementById('appt_time').value.trim();   const p = findP(pid), d = findD(did);
+  if(!p) return err.textContent = 'Error: Invalid Patient.';   if(!d) return err.textContent = 'Error: Invalid Doctor.';
+  if(!vDate(date)) return err.textContent = 'Error: Date must be dd-mm-yyyy.';   if(!vNotEmpty(time)) return err.textContent = 'Error: Time cannot be empty.';   err.textContent = '';
+  const a = { id: nextA(), patient:p, doctor:d, date, time, status:'Booked' };   DB.appointments.push(a);   document.getElementById('appt_date').value = '';   document.getElementById('appt_time').value = '';   renderAppointments();   showDialog('Booked', '>> Appointment booked: ' + a.id, 'ok');
+} function cancelAppointment(){   const err = document.getElementById('appt_err');   if(!selectedApptId) return err.textContent = 'Error: Select an appointment row first.';   const a = DB.appointments.find(x => x.id === selectedApptId);   if(!a) return err.textContent = 'Error: Not found.';   err.textContent = '';
+  a.status = 'Cancelled';   renderAppointments();   showDialog('Cancelled', '>> Appointment ' + a.id + ' cancelled.', 'i'); } function populateBillPatientCombo(){   const s = document.getElementById('bill_patient');
+  s.innerHTML = DB.patients.length     ? DB.patients.map(p => `<option value="${p.id}">${p.id} - ${p.name}</option>`).join('')
+    : '<option value="">(no patients)</option>'; } function generateBill(){
+  const err = document.getElementById('bill_err');   if(DB.patients.length === 0) return err.textContent = 'Error: Register a patient first.';   const pid = document.getElementById('bill_patient').value;   const p = findP(pid);   if(!p) return err.textContent = 'Error: Invalid Patient.';   const docFee = document.getElementById('bill_doc').value.trim();   const medFee = document.getElementById('bill_med').value.trim();   const roomFee = document.getElementById('bill_room').value.trim();   const labFee = document.getElementById('bill_lab').value.trim();   if(!vNum(docFee)) return err.textContent = 'Error: Doctor Fee must be a valid number.';   if(!vNum(medFee)) return err.textContent = 'Error: Medicine Charge must be a valid number.';   if(!vNum(roomFee)) return err.textContent = 'Error: Room Charge must be a valid number.';   if(!vNum(labFee)) return err.textContent = 'Error: Lab Charge must be a valid number.';   err.textContent = '';   const df = parseFloat(docFee), mf = parseFloat(medFee), rf = parseFloat(roomFee), lf = parseFloat     (labFee);   const total = df + mf + rf + lf;
+  const bill = { id: nextB(), patient:p, docFee:df, medFee:mf, roomFee:rf, labFee:lf, total };   DB.bills.push(bill);   const r = "=========================================\n"     + "           HOSPITAL BILL RECEIPT\n"
+    + "=========================================\n"
+    + "Bill ID       : " + bill.id + "\n"
+    + "Patient Name  : " + p.name + "\n"
+    + "-----------------------------------------\n"
+    + "Doctor Fee    : Rs. " + df.toFixed(2) + "\n"
+    + "Medicine Charge: Rs. " + mf.toFixed(2) + "\n"
+    + "Room Charge   : Rs. " + rf.toFixed(2) + "\n"
+    + "Lab Charge    : Rs. " + lf.toFixed(2) + "\n"
+    + "-----------------------------------------\n"
+    + "TOTAL         : Rs. " + total.toFixed(2) + "\n"
+    + "=========================================\n"     + "        Thank you for choosing us!";
+  document.getElementById('billReceipt').textContent = r;
+  showDialog('Bill Generated', 'Total: Rs. ' + total.toFixed(2), 'bill'); } function confirmExit(){
+  showConfirm('Exit', 'Exit the application?', () => {     document.getElementById('mainApp').style.display = 'none';     document.getElementById('closedScreen').style.display = 'flex';     document.getElementById('closedScreen').style.minHeight = '100vh';   });
+}
+function restartApp(){   DB = freshStore();   selectedPatientId = null; selectedDoctorId = null; selectedApptId = null;   document.getElementById('loginUser').value = '';   document.getElementById('loginPass').value = '';   document.getElementById('loginErr').textContent = '';   document.getElementById('closedScreen').style.display = 'none';   document.getElementById('loginScreen').style.display = 'flex'; }
+</script>
+</body>
+</html>
