@@ -1,18 +1,17 @@
           
 
 
-            HOSPITAL MANAGEMENT SYSTEM 
-
-
-
-              DHAANISH CHENNAI COLLEGE OF ENGINEERING 
+            HOSPITAL MANAGEMENt SYSTEM 
 
 
 
 A detailed project report on a browser-based Hospital Management System developed using  and Java.
 Technology Stack
-Java | Web Browserw
+
+Java | Web Browser
+
 Academic Mini Project Submission
+
 Page	Section
 1	Cover Page
 2	Table of Contents
@@ -23,6 +22,7 @@ Page	Section
 22-23	Chapter 5 - Testing and Results
 24	Chapter 6 - Conclusion and Future Scope
 25	References
+
 TABLE OF CONTENTS
 
    List of Figures
@@ -32,10 +32,14 @@ Figure	Description
 3.2	Use case diagram
 3.3	Entity relationship model
 4.1 - 4.6	Application screenshots
+
  CHAPTER 1 - INTRODUCTION
+
 1.1 Overview
+
 Hospitals must manage patient details, doctor information, appointments and billing in a timely and accurate manner. When these activities are performed through paper registers or isolated files, staff spend more time searching, validating and calculating than serving patients. The Hospital Management System (HMS) is a browser-based application that centralizes these essential activities in one simple interface.
 1.2 Background
+
 The project recreates the functional flow of a desktop hospital application using standard web technologies. It intentionally uses a familiar Swing-inspired visual style: title bars, beveled buttons, table grids and confirmation dialogs. The result is a single HTML file that can be opened directly in a browser without installation, a build process or a server.
 1.3 Need for the System
 •	Fast access to patient and doctor information.
@@ -66,6 +70,7 @@ Formatted receipt output	Online payment gateway
 Browser-based standalone execution	Networked deployment and analytics
 1.9 Benefits
 The HMS improves record visibility, standardizes data entry, reduces arithmetic effort and makes the core hospital workflow easier to demonstrate. Since it runs locally in the browser, it is also highly portable and convenient for classroom evaluation.
+
 CHAPTER 2 - SYSTEM ANALYSIS
 2.1 Existing System
 Traditional hospital administration in small settings often depends on notebooks, paper forms and separate spreadsheets. Patient information must be located manually. The availability of doctors and appointments may not be immediately known. Billing requires staff to add several amounts by hand, which increases the chance of calculation errors.
@@ -110,6 +115,7 @@ Operating System	Windows, Linux or macOS
 Browser	Current Chrome, Edge or Firefox
 Development	Text editor / VS Code
 Runtime	HTML5, CSS3 and JavaScript
+
 CHAPTER 3 - SYSTEM DESIGN
 3.1 Architecture Design
 The HMS uses a client-side architecture. The presentation layer provides windows, forms, tables and dialogs. The logic layer validates values and processes CRUD, appointments and bills. The in-memory store maintains arrays of patient, doctor, appointment and bill objects for the active browser session.
